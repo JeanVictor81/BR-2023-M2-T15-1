@@ -26,8 +26,8 @@ class Dinosaur:
             self.dino_jump = True
             self.dino_run = False
         elif not self.jump:
-            self.dino_run = True
             self.dino_jump = False
+            self.dino_run = True
 
         if self.step_index >= 10:
             self.step_index = 0
@@ -45,7 +45,7 @@ class Dinosaur:
             self.dino_rect.y -= self.jump_vel * 4
             self.jump_vel -= 0.8
         
-        if self.jump_vel < JUMP_VEL:
+        if self.jump_vel < -JUMP_VEL:
             self.dino_rect.y = Y_POS
             self.dino_jump = False
             self.jump_vel = JUMP_VEL
