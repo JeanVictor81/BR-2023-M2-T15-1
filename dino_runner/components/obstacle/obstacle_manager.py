@@ -10,9 +10,7 @@ class ObstacleManager:
         self.obstacles = []
 
     def update(self, game):
-        while True:
-            self.random_number = random.randint(0, 2)
-            break
+        self.random_number = random.randint(0, 2)
         if len(self.obstacles) == 0:
             if self.random_number == 0:
                 self.obstacles.append(Cactus(SMALL_CACTUS))

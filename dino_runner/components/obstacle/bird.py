@@ -15,9 +15,10 @@ class Bird(Obstacle):
             self.rect.y = 300
     
     def draw(self, screen):
+        self.image = BIRD[0] if self.step_index < 5 else BIRD[1]
         if self.step_index >= 10:
             self.step_index = 0
-        screen.blit(self.image[self.step_index//5],(self.rect.x, self.rect.y))
+        screen.blit(self.image, (self.rect.x, self.rect.y))
         self.step_index += 1
         
 
