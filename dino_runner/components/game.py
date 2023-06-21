@@ -98,8 +98,6 @@ class Game:
                 self.run()
 
     def show_menu(self):
-
-
         if self.death_count == 0:
             self.screen.fill((255,255,255))
             self.show_text("Press any key to start", SCREEN_HEIGHT/2, SCREEN_WIDTH/2)
