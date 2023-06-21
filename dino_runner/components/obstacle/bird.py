@@ -20,5 +20,3 @@ class Bird(Obstacle):
             self.step_index = 0
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.step_index += 1
-        
-
