@@ -4,7 +4,7 @@ import random
 from dino_runner.components.obstacle.cactus import Cactus
 from dino_runner.components.obstacle.bird import Bird
 from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
-from dino_runner.utils.constants import HAMMER_TYPE
+from dino_runner.utils.constants import HAMMER_TYPE, SHIELD_TYPE, ICE_TYPE
 
 class ObstacleManager:
     def __init__(self):
@@ -31,8 +31,15 @@ class ObstacleManager:
                     break
                 elif game.player.type == HAMMER_TYPE:
                     self.obstacles.remove(obstacle)
-                else:
+                elif game.player.type == SHIELD_TYPE:
                     pass
+                elif game.player.type == ICE_TYPE:
+                    pygame.time.delay(500)
+                    game.playing = False
+                    game.update_death_count()
+                    break
+                    
+
 
     def obstacle_reset(self):
         self.obstacles = []

@@ -1,6 +1,6 @@
 import pygame
 
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, CLOUD, ICE_TYPE
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacle.obstacle_manager import ObstacleManager
 from dino_runner.components.power_up.power_up_manager import Power_Up_Manager
@@ -20,6 +20,8 @@ class Game:
         self.game_speed = GAME_SPEED
         self.x_pos_bg = 0
         self.y_pos_bg = 380
+        self.x_pos_cloud = SCREEN_WIDTH
+        self.y_pos_cloud = 150
         self.score = 0
         self.save_score = 0
         self.death_count = 0
@@ -58,11 +60,16 @@ class Game:
         self.obstacle_manager.update(self)
         self.update_score()
         self.power_up_manage.update(self)
+        self.slow_game_speed()
+
+    def slow_game_speed(self):
+        if self.player.type == ICE_TYPE:
+            self.game_speed -= 2
 
     def update_score(self):
         self.score += 1
         if self.score % 100 == 0:
-            self.game_speed += 5
+            self.game_speed += 2
     
     def update_death_count(self):
         self.save_score = self.score
@@ -74,6 +81,7 @@ class Game:
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255)) # '#FFFFFF'
         self.draw_background()
+        self.draw_cloud()
         self.draw_score()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
@@ -92,8 +100,17 @@ class Game:
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
 
+    def draw_cloud(self):
+        image_width = CLOUD.get_width()
+        self.screen.blit(CLOUD, (self.x_pos_cloud, self.y_pos_cloud))
+        self.screen.blit(CLOUD, (image_width + self.x_pos_cloud, self.y_pos_cloud))
+        if self.x_pos_cloud <= -image_width:
+            self.screen.blit(CLOUD, (image_width + self.x_pos_cloud, self.y_pos_cloud))
+            self.x_pos_cloud = SCREEN_WIDTH
+        self.x_pos_cloud -= self.game_speed
+
     def draw_score(self):
-        self.show_score = f"Score: {self.score}"
+        self.show_score = f"Score: {self.game_speed}"
         self.show_text(self.show_score, 50, 1000)
 
     def draw_power_up(self):

@@ -1,7 +1,7 @@
 import random
 from pygame.sprite import Sprite
 
-from dino_runner.utils.constants import SCREEN_WIDTH
+from dino_runner.utils.constants import SCREEN_WIDTH, ICE_TYPE
 
 
 class Power_Up(Sprite):
@@ -12,7 +12,10 @@ class Power_Up(Sprite):
         self.rect.x = SCREEN_WIDTH  + random.randint(800, 1000)
         self.rect.y = random.randint(125, 175)
         self.start_time= 0
-        self.duration = random.randint(5, 10)
+        if self.type == ICE_TYPE:
+            self.duration = 0
+        else:
+            self.duration = random.randint(5, 10)
 
     def update(self, game_speed, power_ups):
         self.rect.x -= game_speed
