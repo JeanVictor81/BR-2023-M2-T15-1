@@ -77,8 +77,6 @@ class Game:
         if self.score > self.best_score1:
             self.best_score1 = self.score
 
-
-
     def update_score(self):
         self.score += 1
         if self.score % 100 == 0:
@@ -152,14 +150,6 @@ class Game:
             self.show_text(f"Your score: {self.score}", 200, SCREEN_WIDTH/2)
             self.show_text(f"Your death: {self.death_count}", 220, SCREEN_WIDTH/2)
             self.show_text(f"Best score: {self.best_score1}", 50, 80)
-
-            
-            ## mostrar mensagem de 'Press any key to restart'
-            ## mostrar score atingido
-            ## mostrar death_count
-
-            ### Resetar score e game_speed quando reiniciar uma nova rodada do jogo
-            ### Criar método para remover a repetição de código para o texto
 
         pygame.display.update()
 
