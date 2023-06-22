@@ -13,7 +13,7 @@ class Power_Up_Manager:
 
     def generate_power_up(self, score):
         if len(self.power_ups) == 0 and self.when_appears == score:
-            self.number_random = random.random(0, 2)
+            self.number_random = random.randint(0, 2)
             self.when_appears += random.randint(200, 300)
             if self.number_random == 0:
                 self.power_ups.append(Shield())

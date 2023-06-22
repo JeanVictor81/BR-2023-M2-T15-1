@@ -27,7 +27,7 @@ class ObstacleManager:
                 if not game.player.has_power_up: 
                     pygame.time.delay(500)
                     game.playing = False
-                    game.update_death_count()
+                    game.death_count += 1
                     break
                 elif game.player.type == HAMMER_TYPE:
                     self.obstacles.remove(obstacle)

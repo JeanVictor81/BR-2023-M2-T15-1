@@ -25,6 +25,7 @@ class Game:
         self.score = 0
         self.save_score = 0
         self.death_count = 0
+        self.best_score1 = 0
 
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
@@ -34,6 +35,7 @@ class Game:
         self.running = True
         while self.running:
             if not self.playing:
+                pygame.mixer.music.stop()
                 self.show_menu()
                 
         pygame.display.quit()
@@ -42,8 +44,12 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.playing = True
+        pygame.mixer.init()
+        pygame.mixer.music.load('audio.mp3')
+        pygame.mixer.music.play(-1)
         self.obstacle_manager.obstacle_reset()
         self.power_up_manage.reset_power_ups()
+        self.reset_game()
         while self.playing:
             self.events()
             self.update()
@@ -61,20 +67,25 @@ class Game:
         self.update_score()
         self.power_up_manage.update(self)
         self.slow_game_speed()
+        self.best_score()
 
     def slow_game_speed(self):
         if self.player.type == ICE_TYPE:
             self.game_speed -= 2
+
+    def best_score(self):
+        if self.score > self.best_score1:
+            self.best_score1 = self.score
+
+
 
     def update_score(self):
         self.score += 1
         if self.score % 100 == 0:
             self.game_speed += 2
     
-    def update_death_count(self):
-        self.save_score = self.score
+    def reset_game(self):
         self.score = 0
-        self.death_count += 1
         self.game_speed = GAME_SPEED
         
     def draw(self):
@@ -110,7 +121,7 @@ class Game:
         self.x_pos_cloud -= self.game_speed
 
     def draw_score(self):
-        self.show_score = f"Score: {self.game_speed}"
+        self.show_score = f"Score: {self.score}"
         self.show_text(self.show_score, 50, 1000)
 
     def draw_power_up(self):
@@ -138,8 +149,10 @@ class Game:
         else:
             self.screen.fill((255,255,255))
             self.show_text("Press any key to restart", SCREEN_HEIGHT/2, SCREEN_WIDTH/2)
-            self.show_text(f"Your score: {self.save_score}", 200, SCREEN_WIDTH/2)
+            self.show_text(f"Your score: {self.score}", 200, SCREEN_WIDTH/2)
             self.show_text(f"Your death: {self.death_count}", 220, SCREEN_WIDTH/2)
+            self.show_text(f"Best score: {self.best_score1}", 50, 80)
+
             
             ## mostrar mensagem de 'Press any key to restart'
             ## mostrar score atingido
